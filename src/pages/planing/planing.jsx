@@ -44,7 +44,6 @@ const Planing = () => {
 
     // if (loading) return <div>Loading...</div>;
     // if (error) return <div>Error: {error}</div>;
-    console.log(dates)
     return (
         <div className="container mt-5">
             <h1 className="mb-3">Événements à venir</h1>

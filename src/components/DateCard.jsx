@@ -24,8 +24,7 @@ export default function DateCard({ data }) {
         };
 
         fetchEvent();
-    }, [data]);
-    console.log(date)
+    }, []);
     return (
         <div className="container mt-5">
             <div className="row">

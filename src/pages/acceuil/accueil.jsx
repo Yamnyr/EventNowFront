@@ -3,6 +3,7 @@ import axios from 'axios';
 import MyCarousel from "./ImageCarousel";
 import EvenementCard from "../../components/EvenementCard";
 import DateCard from "../../components/DateCard";
+import Evenement from "../evenement/evenement";
 
 const Accueil = () => {
 
@@ -10,23 +11,23 @@ const Accueil = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
-  useEffect(() => {
-    const fetchEvents = async () => {
-        try {
-            // const response = await axios.get('http://127.0.0.1:8000/api/evenements?page=1');
-            const response = await axios.get('http://127.0.0.1:8000/evenements/getall');
-            // console.log(response.data)
-            setEvents(response.data);
-            console.log(response.data)
-            setLoading(false);
-        } catch (err) {
-            setError(err.message);
-            setLoading(false);
-        }
-    };
-
-    fetchEvents();
-}, []);
+//   useEffect(() => {
+//     const fetchEvents = async () => {
+//         try {
+//             // const response = await axios.get('http://127.0.0.1:8000/api/evenements?page=1');
+//             const response = await axios.get('http://127.0.0.1:8000/evenements/getall');
+//             // console.log(response.data)
+//             setEvents(response.data);
+//             console.log(response.data)
+//             setLoading(false);
+//         } catch (err) {
+//             setError(err.message);
+//             setLoading(false);
+//         }
+//     };
+//
+//     fetchEvents();
+// }, []);
 
   return (
     
@@ -129,9 +130,8 @@ const Accueil = () => {
 
         <div className="container marketing">
           <div className="row">
-            {events.map(event => (
-                <EvenementCard key={event.id} data={event.id} className="col-md-4 mb-4" />
-            ))}         
+
+            <Evenement></Evenement>
             {/* <div className="col-lg-4">
               <svg
                 className="bd-placeholder-img rounded-circle"

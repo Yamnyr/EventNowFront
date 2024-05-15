@@ -9,6 +9,7 @@ import Profil from './pages/profil/profil';
 import Evenement from './pages/evenement/evenement'
 import NewEvenement from './pages/admin/newEvenement'
 import DetailEvenement from './pages/evenement/DetailEvenement';
+import Planing from './pages/planing/planing';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/" element={<Accueil />} />
           <Route path="/profil" element={<Profil />} />
           <Route path="/evenement" element={<Evenement />} />
+          <Route path="/planing" element={<Planing />} />
           <Route path="/inscription" element={<Inscription />} />
           <Route path="/newevenement" element={<NewEvenement />} />
           <Route path="/detailEvent/:id" element={<DetailEvenement />} />

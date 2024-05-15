@@ -12,14 +12,7 @@ const Header = () => {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <Link class="nav-link active" aria-current="page" to="/">À PROPOS</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link class="nav-link" to="/evenement">CONTACT</Link>
-                        </li>
-
-                        <li className="nav-item">
-                            <Link class="nav-link" to="/profil">CALENDRIER</Link>
+                            <Link class="nav-link" to="/planing">PLANING</Link>
                         </li>
                         <li className="nav-item">
                             <Link class="nav-link" to="/evenement">EVENEMENTS</Link>

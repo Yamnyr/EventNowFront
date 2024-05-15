@@ -33,8 +33,8 @@ export default function EvenementCard({ data }) {
 
     return (
         <div className="col-md-3 mb-4">
-            <div className="card">
-                <img src={event.image} className="card-img-top" alt="Event" />
+            <div className="card" >
+                <img src={event.image} className="card-img-top" alt="Event" style={{ height: '200px', objectFit: 'cover' }} />
                 <div className="card-body">
                     <h5 className="card-title">{event.nom}</h5>
                     <p className="card-text">{event.lieu}</p>

@@ -11,3 +11,21 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* ### CSS FOOTER */
+/*================================================================================================================================== */
+.footer {
+  background-color: #948979;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+}
+
+.container-gauche, .container-milieu, .container-droit {
+  text-align: center;
+  padding: 20px;
+}
+.container-droit {
+  text-align: right;
+  padding: 20px;
+}

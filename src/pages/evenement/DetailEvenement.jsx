@@ -35,6 +35,7 @@ const DetailEvenement = () => {
         <div className="container mt-5">
             <h1 className="mb-4">{event.nom}</h1>
             <h2 className="mb-3">Informations sur l'événement</h2>
+            <img src={event.image} className="card-img-top" alt="Event" />
             <ul className="list-group list-group-flush">
                 <li className="list-group-item">
                     <strong>Lieu:</strong> {event.lieu}

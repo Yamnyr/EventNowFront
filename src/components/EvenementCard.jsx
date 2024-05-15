@@ -27,28 +27,33 @@ export default function EvenementCard({ data }) {
     }, [data]);
     console.log(event)
     return (
-        <div>
-            {loading ? (
-                <div>Loading...</div>
-            ) : error ? (
-                <div>Error: {error}</div>
-            ) : event ? (
-                <div className="card">
-                    <div className="card-body">
-                        <p className="card-text">{event.image}</p>
-                        <h5 className="card-title">{event.nom}</h5>
-                            <p className="card-text">{event.lieu}</p>
-                        <p className="card-text">
-                            {event.dates.map(date => (
-                                <div key={date.id}>{date.date}</div>
-                            ))}
-                        </p>
-                        <p className="card-text">{event.description}</p>
-                        {event.annule ? <p>{event.raison_annulation}</p>: <p></p>}
-                        <a onClick={goToDetailPage} className="btn btn-primary">En savoir plus</a>
+        <div className="container mt-5">
+            <div className="row">
+                {loading ? (
+                    <div>Loading...</div>
+                ) : error ? (
+                    <div>Error: {error}</div>
+                ) : event ? (
+                    <div className="col-md-4">
+                        <div className="card">
+                            <img src={event.image} className="card-img-top" alt="Event" />
+                            <div className="card-body">
+                                <h5 className="card-title">{event.nom}</h5>
+                                <p className="card-text">{event.lieu}</p>
+                                <p className="card-text">
+                                    {event.dates.map(date => (
+                                        <div key={date.id}>Date: {new Date(date.date).toLocaleDateString()}</div>
+                                    ))}
+                                </p>
+                                <p className="card-text">{event.description}</p>
+                                {event.annule ? <p className="text-danger">{event.raison_annulation}</p> : null}
+                                <button onClick={goToDetailPage} className="btn btn-primary">En savoir plus</button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            ) : null}
+                ) : null}
+            </div>
         </div>
+
     );
 }

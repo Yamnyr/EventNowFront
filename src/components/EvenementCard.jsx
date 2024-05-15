@@ -35,13 +35,16 @@ export default function EvenementCard({ data }) {
             ) : event ? (
                 <div className="card">
                     <div className="card-body">
+                        <p className="card-text">{event.image}</p>
                         <h5 className="card-title">{event.nom}</h5>
-                        <p className="card-text">{event.description}</p>
+                            <p className="card-text">{event.lieu}</p>
                         <p className="card-text">
                             {event.dates.map(date => (
                                 <div key={date.id}>{date.date}</div>
                             ))}
                         </p>
+                        <p className="card-text">{event.description}</p>
+                        {event.annule ? <p>{event.raison_annulation}</p>: <p></p>}
                         <a onClick={goToDetailPage} className="btn btn-primary">En savoir plus</a>
                     </div>
                 </div>

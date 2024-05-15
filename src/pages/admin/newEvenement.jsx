@@ -7,22 +7,21 @@ export default function NewEvenement({ data }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [formData, setFormData] = useState({
-        "@context": "/api/contexts/Evenement",
-        "@type": "Evenement",
         "nom": '',
         "description": '',
         "lieu": '',
         "age_requis": 0,
         "image": '',
         "type": '',
-        "annule": false
+        "annule": true,
+        "dates": []
     });
 
     useEffect(() => {
         const fetchTypes = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/types');
-                setTypes(response.data['hydra:member']);
+                const response = await axios.get('http://127.0.0.1:8000/types/getall');
+                setTypes(response.data);
                 setLoading(false);
             } catch (err) {
                 setError(err.message);
@@ -41,21 +40,39 @@ export default function NewEvenement({ data }) {
         });
     };
 
+    const handleDateChange = (index, e) => {
+        const { name, value } = e.target;
+        const dates = [...formData.dates];
+        dates[index][name] = value;
+        setFormData({
+            ...formData,
+            dates
+        });
+        console.log(value)
+        console.log(formData)
+    };
+
+    const addDateField = () => {
+        setFormData({
+            ...formData,
+            dates: [...formData.dates, { date: '', places_rest: 0, nombre_pers: 0 }]
+        });
+    };
+
+    const removeDateField = (index) => {
+        const dates = [...formData.dates];
+        dates.splice(index, 1);
+        setFormData({
+            ...formData,
+            dates
+        });
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            console.log(formData)
-            const response = await axios.post('http://127.0.0.1:8000/api/evenements', {
-                "@context": "/api/contexts/Evenement",
-                "@type": "Evenement",
-                "nom": '',
-                "description": '',
-                "lieu": '',
-                "age_requis": 0,
-                "image": '',
-                "type": '',
-                "annule": false
-            }, {
+            console.log(formData);
+            const response = await axios.post('http://127.0.0.1:8000/evenements/add', formData, {
                 headers: {
                     'Content-Type': 'application/ld+json'
                 }
@@ -95,9 +112,22 @@ export default function NewEvenement({ data }) {
                     <select id="type" name="type" value={formData.type} onChange={handleInputChange}>
                         <option value="">Sélectionnez un type</option>
                         {types.map(type => (
-                            <option key={type.id} value={'/api/types/'+type.id}>{type.nom}</option>
+                            <option key={type.id} value={type.id}>{type.nom}</option>
                         ))}
                     </select>
+                </div>
+                <div>
+                    <h3>Dates:</h3>
+                    {formData.dates.map((date, index) => (
+                        <div key={index}>
+                            <label htmlFor={`date_${index}`}>Date:</label>
+                            <input type="date" id={`date_${index}`} name={`date_${index}`} value={date.date} onChange={(e) => handleDateChange(index, e)} />
+                            <label htmlFor={`places_rest_${index}`}>Places restantes:</label>
+                            <input type="number" id={`places_rest_${index}`} name={`places_rest_${index}`} value={date.places_rest} onChange={(e) => handleDateChange(index, e)} />
+                            <button type="button" onClick={() => removeDateField(index)}>Supprimer</button>
+                        </div>
+                    ))}
+                    <button type="button" onClick={addDateField}>Ajouter une date</button>
                 </div>
                 <button type="submit">Créer</button>
             </form>

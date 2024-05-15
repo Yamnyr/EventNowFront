@@ -39,12 +39,17 @@ const DetailEvenement = () => {
 
     const handleRegistration = async () => {
         try {
-            const response = await axios.post('http://127.0.0.1:8000/inscriptions/add', {
-                user_id: 1, // L'ID de l'utilisateur devrait être récupéré de manière dynamique
+            const requestData = {
+                user_id: 1,
                 date_id: selectedDateId,
                 certif: true,
                 nombre_pers: nombrePers
-            });
+            };
+
+            console.log("Données envoyées :", requestData);
+
+            const response = await axios.post('http://127.0.0.1:8000/inscriptions/add', requestData);
+
             console.log("Inscription réussie:", response.data);
             setShow(false);
         } catch (error) {

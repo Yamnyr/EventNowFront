@@ -22,7 +22,6 @@ function App() {
           <Route path="/inscription" element={<Inscription />} />
           <Route path="/newevenement" element={<NewEvenement />} />
           <Route path="/detailEvent/id" element={<DetailEvenement />} />
-
         </Routes>
         <Footer />
       </div>

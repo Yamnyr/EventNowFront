@@ -11,14 +11,16 @@ const DetailEvenement = () => {
     useEffect(() => {
         const fetchEventDetail = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/evenements/getone/${id}`);
-                setEvent(response.data); // Supposition que l'API renvoie directement l'objet événement
+                const response = await axios.get(`http://127.0.0.1:8000/dates/getone/${id}`);
+                setEvent(response.data);
                 setLoading(false);
+                console.log('testici', response.data)
             } catch (err) {
                 setError(err.message);
                 setLoading(false);
             }
         };
+
         fetchEventDetail();
     }, [id]);
 
@@ -28,13 +30,11 @@ const DetailEvenement = () => {
 
     return (
         <div className="container">
-            <h1>{event.nom}</h1>
+            <h1>{event.id}</h1>
             <p>{event.description}</p>
-            <p>Places Restantes: {event.places_rest}</p>
             {/* Afficher d'autres détails ici */}
         </div>
     );
 };
-
 
 export default DetailEvenement;

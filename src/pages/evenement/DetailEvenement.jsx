@@ -11,10 +11,13 @@ const DetailEvenement = () => {
     useEffect(() => {
         const fetchEventDetail = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/dates/getone/${id}`);
-                setEvent(response.data);
-                setLoading(false);
-                console.log('testici', response.data)
+                const response = await axios.get(`http://127.0.0.1:8000/evenements/getone/${id}`);
+                if (response.data.length > 0) {
+                    setEvent(response.data[0]); // Si l'API retourne un tableau
+                    setLoading(false);
+                } else {
+                    throw new Error('No data available');
+                }
             } catch (err) {
                 setError(err.message);
                 setLoading(false);
@@ -30,9 +33,12 @@ const DetailEvenement = () => {
 
     return (
         <div className="container">
-            <h1>{event.id}</h1>
-            <p>{event.description}</p>
-            {/* Afficher d'autres détails ici */}
+            <h1>{event.nom}</h1>
+            <p>Lieu: {event.lieu}</p>
+            <p>Date: {event.dates.map(date => (
+                <div key={date.id}>{date.date}</div>
+            ))}</p>
+            <p>Places restantes: {event.places_rest || 'Data not available'}</p>
         </div>
     );
 };

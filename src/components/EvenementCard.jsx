@@ -11,11 +11,12 @@ export default function EvenementCard({ data }) {
     const goToDetailPage = () => {
         navigate(`/detailEvent/${event.id}`);
     };
+
     useEffect(() => {
         const fetchEvent = async () => {
             try {
                 const response = await axios.get(`http://127.0.0.1:8000/evenements/getone/${data}`);
-                setEvent(response.data[0]);
+                setEvent(response.data[0]); // Assume response.data directly returns the event object
                 setLoading(false);
             } catch (err) {
                 setError(err.message);
@@ -25,35 +26,28 @@ export default function EvenementCard({ data }) {
 
         fetchEvent();
     }, [data]);
-    console.log(event)
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
+    if (!event) return <div>No event found.</div>;
+
     return (
-        <div className="container mt-5">
-            <div className="row">
-                {loading ? (
-                    <div>Loading...</div>
-                ) : error ? (
-                    <div>Error: {error}</div>
-                ) : event ? (
-                    <div className="col-md-4">
-                        <div className="card">
-                            <img src={event.image} className="card-img-top" alt="Event" />
-                            <div className="card-body">
-                                <h5 className="card-title">{event.nom}</h5>
-                                <p className="card-text">{event.lieu}</p>
-                                <p className="card-text">
-                                    {event.dates.map(date => (
-                                        <div key={date.id}>Date: {new Date(date.date).toLocaleDateString()}</div>
-                                    ))}
-                                </p>
-                                <p className="card-text">{event.description}</p>
-                                {event.annule ? <p className="text-danger">{event.raison_annulation}</p> : null}
-                                <button onClick={goToDetailPage} className="btn btn-primary">En savoir plus</button>
-                            </div>
-                        </div>
-                    </div>
-                ) : null}
+        <div className="col-md-3 mb-4">
+            <div className="card">
+                <img src={event.image} className="card-img-top" alt="Event" />
+                <div className="card-body">
+                    <h5 className="card-title">{event.nom}</h5>
+                    <p className="card-text">{event.lieu}</p>
+                    <p className="card-text">
+                        {event.dates.map(date => (
+                            <div key={date.id}>Date: {new Date(date.date).toLocaleDateString()}</div>
+                        ))}
+                    </p>
+                    <p className="card-text">{event.description}</p>
+                    {event.annule && <p className="text-danger">{event.raison_annulation}</p>}
+                    <button onClick={goToDetailPage} className="btn btn-primary">En savoir plus</button>
+                </div>
             </div>
         </div>
-
     );
 }

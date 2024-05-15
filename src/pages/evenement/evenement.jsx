@@ -31,6 +31,7 @@ const Evenement = () => {
                 const response = await axios.get('http://127.0.0.1:8000/evenements/getall');
                 // console.log(response.data)
                 setEvents(response.data);
+                console.log(response.data)
                 setLoading(false);
             } catch (err) {
                 setError(err.message);

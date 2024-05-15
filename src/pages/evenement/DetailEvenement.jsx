@@ -32,13 +32,24 @@ const DetailEvenement = () => {
     if (!event) return <div>No event found.</div>;
 
     return (
-        <div className="container">
-            <h1>{event.nom}</h1>
-            <p>Lieu: {event.lieu}</p>
-            <p>Date: {event.dates.map(date => (
-                <div key={date.id}>{date.date}</div>
-            ))}</p>
-            <p>Places restantes: {event.places_rest || 'Data not available'}</p>
+        <div className="container mt-5">
+            <h1 className="mb-4">{event.nom}</h1>
+            <h2 className="mb-3">Informations sur l'événement</h2>
+            <ul className="list-group list-group-flush">
+                <li className="list-group-item">
+                    <strong>Lieu:</strong> {event.lieu}
+                </li>
+                {event.dates.map(date => (
+                    <li key={date.id} className="list-group-item">
+                        <strong>Date:</strong> {new Date(date.date).toLocaleDateString("fr-FR", {
+                            year: 'numeric', month: 'long', day: 'numeric',
+                            hour: '2-digit', minute: '2-digit', hour12: false
+                        })}
+                        <br />
+                        <strong>Places restantes:</strong> {date.places_rest || 'Data not available'}
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 };

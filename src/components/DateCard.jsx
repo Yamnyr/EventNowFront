@@ -51,6 +51,5 @@ export default function DateCard({ data }) {
                 ) : null}
             </div>
         </div>
-
     );
 }

@@ -21,7 +21,7 @@ function App() {
           <Route path="/evenement" element={<Evenement />} />
           <Route path="/inscription" element={<Inscription />} />
           <Route path="/newevenement" element={<NewEvenement />} />
-          <Route path="/detailEvent" element={<DetailEvenement />} />
+          <Route path="/detailEvent/id" element={<DetailEvenement />} />
 
         </Routes>
         <Footer />

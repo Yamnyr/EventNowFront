@@ -11,15 +11,14 @@ const DetailEvenement = () => {
     useEffect(() => {
         const fetchEventDetail = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/evenements/${id}`);
-                setEvent(response.data);
+                const response = await axios.get(`http://127.0.0.1:8000/evenements/getone/${id}`);
+                setEvent(response.data); // Supposition que l'API renvoie directement l'objet événement
                 setLoading(false);
             } catch (err) {
                 setError(err.message);
                 setLoading(false);
             }
         };
-
         fetchEventDetail();
     }, [id]);
 
@@ -31,9 +30,11 @@ const DetailEvenement = () => {
         <div className="container">
             <h1>{event.nom}</h1>
             <p>{event.description}</p>
+            <p>Places Restantes: {event.places_rest}</p>
             {/* Afficher d'autres détails ici */}
         </div>
     );
 };
+
 
 export default DetailEvenement;

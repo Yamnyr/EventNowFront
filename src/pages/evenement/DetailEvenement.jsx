@@ -33,24 +33,37 @@ const DetailEvenement = () => {
 
     return (
         <div className="container mt-5">
-            <h1 className="mb-4">{event.nom}</h1>
-            <h2 className="mb-3">Informations sur l'événement</h2>
-            <img src={event.image} className="card-img-top" alt="Event" />
-            <ul className="list-group list-group-flush">
-                <li className="list-group-item">
-                    <strong>Lieu:</strong> {event.lieu}
-                </li>
-                {event.dates.map(date => (
-                    <li key={date.id} className="list-group-item">
-                        <strong>Date:</strong> {new Date(date.date).toLocaleDateString("fr-FR", {
-                            year: 'numeric', month: 'long', day: 'numeric',
-                            hour: '2-digit', minute: '2-digit', hour12: false
-                        })}
-                        <br />
-                        <strong>Places restantes:</strong> {date.places_rest || 'Data not available'}
-                    </li>
-                ))}
-            </ul>
+            <div className="card mb-3">
+                <img
+                    src={event.image}
+                    className="card-img-top custom-img"
+                    alt="Event"
+                    style={{
+                        maxHeight: '300px', objectFit: 'cover',
+                        width: "100%"
+                    }} />
+
+                <div className="card-body">
+                    <h1 className="card-title">{event.nom}</h1>
+                    <p className="card-text"><strong>Type:</strong> {event.type}</p>
+                    <p className="card-text"><strong>Description:</strong> {event.description}</p>
+                    <p className="card-text"><strong>Lieu:</strong> {event.lieu}</p>
+                    <p className="card-text"><strong>Âge requis:</strong> {event.age_requis} ans</p>
+                    <div className="list-group list-group-flush">
+                        {event.dates.map(date => (
+                            <div key={date.id} className="list-group-item">
+                                <strong>Date:</strong> {new Date(date.date).toLocaleDateString("fr-FR", {
+                                    year: 'numeric', month: 'long', day: 'numeric',
+                                    hour: '2-digit', minute: '2-digit', hour12: false
+                                })}
+                                <br />
+                                <strong>Places restantes:</strong> {date.places_rest || 'Data not available'}
+                            </div>
+                        ))}
+                    </div>
+                    {event.annule && <p className="text-danger">Annulé: {event.raison_annulation}</p>}
+                </div>
+            </div>
         </div>
     );
 };

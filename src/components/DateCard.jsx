@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import '../index.css';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
@@ -33,17 +34,41 @@ export default function DateCard({ data }) {
                 ) : error ? (
                     <div>Error: {error}</div>
                 ) : date ? (
-                    <div className="col-md-4">
-                        <div className="card">
-                            <img src={date.evenement.image} className="card-img-top" alt="Event" />
-                            <div className="card-body">
-                                <h5 className="card-title">{date.evenement.nom}</h5>
-                                <p className="card-text">{date.evenement.lieu}</p>
-                                <p className="card-text">{date.places_rest}</p>
-                                <p className="card-text">{new Date(date.date.date).toLocaleDateString()}</p>
-                                <p className="card-text">{date.evenement.description}</p>
-                                {date.evenement.annule ? <p className="text-danger">{date.evenement.raison_annulation}</p> : null}
-                                <button onClick={goToDetailPage} className="btn btn-primary">En savoir plus</button>
+                    <div className="col-12 mb-3">
+                        <div className="event-ticket card mb-3">
+                            <div className="row no-gutters">
+                                <div className="col-md-4">
+                                    <img 
+                                        src="{date.evenement.image} "
+                                        className="card-img rounded-end border border-dark" 
+                                        alt="Event" 
+                                        style={{ objectFit: 'cover', height: '100%' }} 
+                                    />
+                                </div>
+                                <div className="col-md-8">
+                                    <div className="card-body d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h5 className="card-title">{date.evenement.nom}</h5>
+                                            <p className="card-text">
+                                                {new Date(date.date.date).toLocaleDateString('fr-FR', { 
+                                                    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
+                                                })}
+                                            </p>
+                                            <p className="card-text">{date.evenement.lieu}</p>
+                                            <span className="badge bg-warning text-dark">Encore {date.places_rest} places restantes !</span>
+
+                                            <p className="card-text">{date.evenement.description}</p>
+                                            {date.evenement.annule && (
+                                                <p className="text-danger">{date.evenement.raison_annulation}</p>
+                                            )}
+                                        </div>
+                                        <div className="d-flex justify-content-between align-items-center position-absolute bottom-0 end-0 p-3">
+                                            <button onClick={goToDetailPage} className="btn btn-info ms-auto">
+                                                Pour plus d'info
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

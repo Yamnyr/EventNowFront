@@ -11,6 +11,7 @@ import Evenement from './pages/evenement/evenement'
 import NewEvenement from './pages/admin/newEvenement'
 import DetailEvenement from './pages/evenement/DetailEvenement';
 import Planing from './pages/planing/planing';
+import Calendar from './components/Calendar';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/inscription" element={<Inscription />} />
           <Route path="/newevenement" element={<NewEvenement />} />
           <Route path="/detailEvent/:id" element={<DetailEvenement />} />
+          <Route path='/cale'element={<Calendar/>} />
         </Routes>
         <Footer />
       </div>

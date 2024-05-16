@@ -44,7 +44,7 @@ export default function DateCard({ data }) {
                                         alt="Event" 
                                         style={{ objectFit: 'cover', height: '100%' }} 
                                     />
-                                </div>
+                                </div> 
                                 <div className="col-md-8">
                                     <div className="card-body d-flex flex-column justify-content-between">
                                         <div>

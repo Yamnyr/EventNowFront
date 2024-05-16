@@ -31,7 +31,6 @@ const Planing = () => {
                 const response = await axios.get('http://127.0.0.1:8000/dates/getall');
                 // console.log(response.data)
                 setDates(response.data);
-                console.log(response.data)
                 setLoading(false);
             } catch (err) {
                 setError(err.message);

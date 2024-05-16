@@ -118,5 +118,5 @@ const DetailEvenement = () => {
         </div>
     );
 };
-
+//TODO: ajouté second modal avec un champ raison annulation avec cette route: http://127.0.0.1:8000/evenements/annule/2
 export default DetailEvenement;

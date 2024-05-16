@@ -113,7 +113,7 @@ const AddEventForm = () => {
                     </div>
                     <div className="col-md-6">
                         <label>Places restantes:</label>
-                        <input type="number" name="places_rest" value={dateData.places_rest}
+                        <input type="number" min="0" max="7000" name="places_rest" value={dateData.places_rest}
                                onChange={(e) => handleChange(index, e)} className="form-control mb-3"/>
                     </div>
                 </div>

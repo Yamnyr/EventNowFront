@@ -223,7 +223,7 @@ const Accueil = () => {
         </div>
 
         <hr class="featurette-divider" />
-        <div class="row featurette">
+        <div class="row featurette m-5 p-5">
           <div class="col-md-7">
             <h2 class="featurette-heading fw-normal lh-1">Qui sommes nous ?</h2>
             <p class="lead">
@@ -263,7 +263,7 @@ const Accueil = () => {
 
         <hr class="featurette-divider" />
 
-        <div class="row featurette">
+        <div class="row featurette m-5 p-5">
           <div class="col-md-7 order-md-2">
             <h2 class="featurette-heading fw-normal lh-1">
             Pourquoi acheter vos billets chez EventNow ?
@@ -302,7 +302,7 @@ const Accueil = () => {
 
         <hr class="featurette-divider" />
 
-        <div class="row featurette">
+        <div class="row featurette m-5 p-5">
           <div class="col-md-7">
             <h2 class="featurette-heading fw-normal lh-1">
               Et enfin.{" "}

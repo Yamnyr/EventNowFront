@@ -29,3 +29,8 @@ code {
   text-align: right;
   padding: 20px;
 }
+
+
+.mh-75{
+  min-height: 75px;
+}

@@ -33,19 +33,23 @@ export default function EvenementCard({ data }) {
 
     return (
         <div className="col-md-3 mb-4">
-            <div className="card" >
+            <div className={`card ${event.annule ? 'bg-danger' : ''}` }>
             <h4 className="card-title">Catégorie : {event.type}</h4>
                 <img src={event.image} className="card-img-top" alt="Event" style={{ height: '200px', objectFit: 'cover' }} />
                 <div className="card-body">
                     <h5 className="card-title">{event.nom}</h5>
                     <p className="card-text">{event.lieu}</p>
-                    <p className="card-text">
+                    <p className="card-text mh-75">
                         {event.dates.map(date => (
                             <div key={date.id}>Date: {new Date(date.date).toLocaleDateString()}</div>
                         ))}
                     </p>
                     <p className="card-text">{event.description}</p>
-                    {event.annule && <p className="text-danger">{event.raison_annulation}</p>}
+                    {event.annule && (
+                        <p className="text-danger text-white" style={{ color: 'white', fontWeight: 'bold', fontSize: '1.2rem' }}>
+                            Evenements annulé : {event.raison_annulation}
+                        </p>
+                    )}
                     <button onClick={goToDetailPage} className="btn btn-primary">En savoir plus</button>
                 </div>
             </div>

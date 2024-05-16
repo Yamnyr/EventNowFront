@@ -11,6 +11,8 @@ import Evenement from './pages/evenement/evenement'
 import NewEvenement from './pages/admin/newEvenement'
 import DetailEvenement from './pages/evenement/DetailEvenement';
 import Planing from './pages/planing/planing';
+import Connexion from "./pages/connexion/Connexion";
+import Deconnexion from "./pages/connexion/Deconnexion";
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
           <Route path="/inscription" element={<Inscription />} />
           <Route path="/newevenement" element={<NewEvenement />} />
           <Route path="/detailEvent/:id" element={<DetailEvenement />} />
+          <Route path="/login" element={<Connexion />} />
+          <Route path="/logout" element={<Deconnexion />} />
         </Routes>
         <Footer />
       </div>

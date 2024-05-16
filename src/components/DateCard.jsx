@@ -39,7 +39,7 @@ export default function DateCard({ data }) {
                             <div className="row no-gutters">
                                 <div className="col-md-4">
                                     <img 
-                                        src="{date.evenement.image} "
+                                        src={date.evenement.image}
                                         className="card-img rounded-end border border-dark" 
                                         alt="Event" 
                                         style={{ objectFit: 'cover', height: '100%' }} 

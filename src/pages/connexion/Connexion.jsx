@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import CryptoJS from "crypto-js";
+
 
 const Connexion = () => {
   const [users, setUsers] = useState([]);
   const [formData, setFormData] = useState({ password: "", email: "" });
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   // Récupère les données de l'API lors du montage du composant
@@ -42,19 +44,30 @@ const Connexion = () => {
   // Vérifie si les données du formulaire sont présentes dans le tableau des utilisateurs
   const handleSubmit = (e) => {
     e.preventDefault();
+    const hash = CryptoJS.MD5(formData.password).toString();
     const userFind = users.find(
-      (user) =>
-        user.password === formData.password && user.email === formData.email
+      (user) => user.password === hash && user.email === formData.email
     );
 
-    if (userFind) {
-      const role = userFind.role.includes('ROLE_ADMIN') ? 'ROLE_ADMIN' : 'ROLE_USER';
+    // console.log(formData.email);
+    // console.log(hash);
+    // console.log(userFind.id,
+    //     userFind.nom,
+    //     userFind.prenom,
+    //     (Boolean(userFind.role.find( e => e ==='ROLE_ADMIN')))?'ROLE_ADMIN':'ROLE_USER'
+    //   );
+
+    if (Boolean(userFind)) {
+      const role = Boolean(userFind.role.find((e) => e === "ROLE_ADMIN"))
+        ? "ROLE_ADMIN"
+        : "ROLE_USER";
+
       saveToLocalStorage({
         id: userFind.id,
         role: role,
         nom: userFind.nom,
         prenom: userFind.prenom,
-        login: true
+        login: true,
       });
     } else {
       setErrorMessage("Email ou mot de passe incorrect.");
@@ -64,7 +77,11 @@ const Connexion = () => {
   return (
     <div className="container">
       <h1>Formulaire de Connexion d'utilisateur</h1>
-      {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
+      {errorMessage && (
+        <div className="alert alert-danger" role="alert">
+          {errorMessage}
+        </div>
+      )}
       <form onSubmit={handleSubmit}>
         <div className="input-group mb-3">
           <span className="input-group-text">@example.com</span>

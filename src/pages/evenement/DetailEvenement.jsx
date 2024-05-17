@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Modal, Button, Form, Alert } from "react-bootstrap";
-import { PDFDocument, rgb } from 'pdf-lib';
+import { PDFDocument, rgb } from "pdf-lib";
 
 const DetailEvenement = () => {
   const { id } = useParams();
@@ -51,7 +51,7 @@ const DetailEvenement = () => {
     const { width, height } = page.getSize();
     const fontSize = 20;
 
-    page.drawText('Confirmation d\'inscription', {
+    page.drawText("Confirmation d'inscription", {
       x: 50,
       y: height - 4 * fontSize,
       size: fontSize,
@@ -89,7 +89,7 @@ const DetailEvenement = () => {
     });
 
     const pdfBytes = await pdfDoc.save();
-    const pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+    const pdfBlob = new Blob([pdfBytes], { type: "application/pdf" });
     const pdfUrl = URL.createObjectURL(pdfBlob);
     setPdfUrl(pdfUrl);
     setPdfGenerated(true);
@@ -97,7 +97,9 @@ const DetailEvenement = () => {
 
   const handleRegistration = async () => {
     if (!certifyAge) {
-      alert("Vous devez certifier que tous les participants ont plus de l'âge minimum requis.");
+      alert(
+        "Vous devez certifier que tous les participants ont plus de l'âge minimum requis."
+      );
       return;
     }
 
@@ -128,7 +130,7 @@ const DetailEvenement = () => {
   const handleAnnulation = async () => {
     try {
       const requestData = {
-        raison_annulation: raison
+        raison_annulation: raison,
       };
 
       console.log("Données envoyées :", requestData);
@@ -213,8 +215,15 @@ const DetailEvenement = () => {
 
       {/* Afficher un message de succès après l'inscription */}
       {pdfGenerated && (
-        <Alert variant="success" onClose={() => setPdfGenerated(false)} dismissible>
-          Inscription réussie ! <a href={pdfUrl} download="confirmation_inscription.pdf">Télécharger le récapitulatif</a>
+        <Alert
+          variant="success"
+          onClose={() => setPdfGenerated(false)}
+          dismissible
+        >
+          Inscription réussie !{" "}
+          <a href={pdfUrl} download="confirmation_inscription.pdf">
+            Télécharger le récapitulatif
+          </a>
         </Alert>
       )}
 

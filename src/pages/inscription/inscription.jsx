@@ -82,6 +82,7 @@ const Inscription = () => {
 
             // Rediriger l'utilisateur après l'inscription réussie
             navigate("/", { state: { message: "Inscription réussie ! Vous êtes maintenant connecté." } });
+            window.location.reload();
         } catch (error) {
             console.error("Erreur lors de l'inscription:", error);
             setErrorMessage("Erreur lors de l'inscription. Veuillez réessayer.");

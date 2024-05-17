@@ -13,13 +13,14 @@ const DetailEvenement = () => {
   const [selectedDateId, setSelectedDateId] = useState(null);
   const [raison, setRaison] = useState(null);
   const [nombrePers, setNombrePers] = useState(1); // État pour stocker le nombre de personnes
+  const [certifyAge, setCertifyAge] = useState(false); // État pour certifier l'âge minimum
 
   const handleClose = () => setShow(false);
   const handleShow = (dateId) => {
     setSelectedDateId(dateId);
     setShow(true);
   };
-  
+
   useEffect(() => {
     const fetchEventDetail = async () => {
       try {
@@ -43,6 +44,11 @@ const DetailEvenement = () => {
 
 
   const handleRegistration = async () => {
+    if (!certifyAge) {
+      alert("Vous devez certifier que tous les participants ont plus de l'âge minimum requis.");
+      return;
+    }
+
     try {
       const requestData = {
         user_id: 1,
@@ -64,37 +70,32 @@ const DetailEvenement = () => {
       console.error("Erreur lors de l'inscription:", error);
     }
   };
-  
 
+  const handleCloseA = () => setShow2(false);
+  const handleAnnulation = async () => {
+    try {
+      const requestData = {
+        raison_annulation: raison
+      };
 
+      console.log("Données envoyées :", requestData);
 
-    const handleCloseA = () => setShow2(false);
-              const handleAnnulation = async () => {
-                try {
-                  const requestData = {
-                    raison_annulation : raison
-                  };
-            
-                  console.log("Données envoyées :", requestData);
-            
-                  const response = await axios.put(
-                    `http://127.0.0.1:8000/evenements/annule/${id}`,
-                    requestData
-                  );
-            
-                  console.log("Vous avez annulez l'evenement:", response.data);
-                  setShow2(false);
-                } catch (error) {
-                  console.error("Erreur lors de l'annnulation:", error);
-                }
-              };
-    const handleShowA = (dateId) => {
-      setSelectedDateId(dateId);
-      setShow2(true);
-    };
+      const response = await axios.put(
+        `http://127.0.0.1:8000/evenements/annule/${id}`,
+        requestData
+      );
 
-    
-    
+      console.log("Vous avez annulé l'événement:", response.data);
+      setShow2(false);
+    } catch (error) {
+      console.error("Erreur lors de l'annulation:", error);
+    }
+  };
+
+  const handleShowA = (dateId) => {
+    setSelectedDateId(dateId);
+    setShow2(true);
+  };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -149,7 +150,7 @@ const DetailEvenement = () => {
                   className="btn btn-primary ml-3"
                   onClick={() => handleShowA(date.id)}
                 >
-                  annuler
+                  Annuler
                 </button>
               </div>
             ))}
@@ -157,13 +158,7 @@ const DetailEvenement = () => {
         </div>
       </div>
 
-
-
-
-
-      
-
-{/* MODAL INSCRIPRION */}
+      {/* MODAL INSCRIPTION */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Confirmation d'inscription</Modal.Title>
@@ -180,6 +175,14 @@ const DetailEvenement = () => {
               max="10" // Adaptez selon le maximum autorisé
             />
           </Form.Group>
+          <Form.Group controlId="formBasicCheckbox">
+            <Form.Check
+              type="checkbox"
+              label={`Je certifie que tous les participants ont plus de ${event.age_requis} ans`}
+              checked={certifyAge}
+              onChange={(e) => setCertifyAge(e.target.checked)}
+            />
+          </Form.Group>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
@@ -191,21 +194,19 @@ const DetailEvenement = () => {
         </Modal.Footer>
       </Modal>
 
-
-{/* MODAL ANNULATION */}
-
+      {/* MODAL ANNULATION */}
       <Modal show={show2} onHide={handleCloseA}>
         <Modal.Header closeButton>
-          <Modal.Title>Confirmation l'annulation</Modal.Title>
+          <Modal.Title>Confirmation de l'annulation</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           Voulez-vous vraiment annuler cet événement ?<br />
           <Form.Group controlId="formBasicEmail">
-            <Form.Label>Raison de l'annulaton</Form.Label>
+            <Form.Label>Raison de l'annulation</Form.Label>
             <Form.Control
-                type="text"
-                value={raison}
-                onChange={e => setRaison(e.target.value,)}
+              type="text"
+              value={raison}
+              onChange={(e) => setRaison(e.target.value)}
             />
           </Form.Group>
         </Modal.Body>
@@ -221,5 +222,5 @@ const DetailEvenement = () => {
     </div>
   );
 };
-//TODO: ajouté second modal avec un champ raison annulation avec cette route: http://127.0.0.1:8000/evenements/annule/2
+
 export default DetailEvenement;

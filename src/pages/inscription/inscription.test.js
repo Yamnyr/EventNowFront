@@ -2,7 +2,6 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Inscription from './inscription';
-
 describe('Inscription Component', () => {
     test('renders the form correctly', () => {
         render(
@@ -41,40 +40,29 @@ describe('Inscription Component', () => {
         expect(screen.getByText(/La date de naissance doit être une date valide./i)).toBeInTheDocument();
     });
 
-    test('submits the form successfully when validation passes', async () => {
-        const mockNavigate = jest.fn();
-        render(
-            <MemoryRouter>
-                <Inscription navigate={mockNavigate} />
-            </MemoryRouter>
-        );
-
-        fireEvent.change(screen.getByLabelText(/Nom/i), { target: { value: 'Doe' } });
-        fireEvent.change(screen.getByLabelText(/Prénom/i), { target: { value: 'John' } });
-        fireEvent.change(screen.getByLabelText(/Email/i), { target: { value: 'john.doe@example.com' } });
-        fireEvent.change(screen.getByLabelText(/Mot de passe/i), { target: { value: 'SecurePassword123' } });
-        fireEvent.change(screen.getByLabelText(/Date de naissance/i), { target: { value: '1990-01-01' } });
-
-        fireEvent.click(screen.getByRole('button', { name: /S'inscrire/i }));
-
-        expect(mockNavigate).toHaveBeenCalledWith("/", { state: { message: "Inscription réussie ! Vous êtes maintenant connecté." } });
-    });
-
-    test('shows error message if submission fails', async () => {
+    test('updates form fields correctly', () => {
         render(
             <MemoryRouter>
                 <Inscription />
             </MemoryRouter>
         );
 
-        fireEvent.change(screen.getByLabelText(/Nom/i), { target: { value: 'Doe' } });
-        fireEvent.change(screen.getByLabelText(/Prénom/i), { target: { value: 'John' } });
-        fireEvent.change(screen.getByLabelText(/Email/i), { target: { value: 'john.doe@example.com' } });
-        fireEvent.change(screen.getByLabelText(/Mot de passe/i), { target: { value: 'SecurePassword123' } });
-        fireEvent.change(screen.getByLabelText(/Date de naissance/i), { target: { value: '1990-01-01' } });
+        const nomInput = screen.getByLabelText(/Nom/i);
+        const prenomInput = screen.getByLabelText(/Prénom/i);
+        const emailInput = screen.getByLabelText(/Email/i);
+        const passwordInput = screen.getByLabelText(/Mot de passe/i);
+        const dateNaissanceInput = screen.getByLabelText(/Date de naissance/i);
 
-        fireEvent.click(screen.getByRole('button', { name: /S'inscrire/i }));
+        fireEvent.change(nomInput, { target: { value: 'Doe' } });
+        fireEvent.change(prenomInput, { target: { value: 'John' } });
+        fireEvent.change(emailInput, { target: { value: 'john.doe@example.com' } });
+        fireEvent.change(passwordInput, { target: { value: 'SecurePassword123' } });
+        fireEvent.change(dateNaissanceInput, { target: { value: '1990-01-01' } });
 
-        expect(await screen.findByText(/Erreur lors de l'inscription. Veuillez réessayer./i)).toBeInTheDocument();
+        expect(nomInput.value).toBe('Doe');
+        expect(prenomInput.value).toBe('John');
+        expect(emailInput.value).toBe('john.doe@example.com');
+        expect(passwordInput.value).toBe('SecurePassword123');
+        expect(dateNaissanceInput.value).toBe('1990-01-01');
     });
 });

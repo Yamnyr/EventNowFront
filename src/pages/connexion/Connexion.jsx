@@ -41,13 +41,14 @@ const Connexion = () => {
       (user) =>
         user.password === formData.password && user.email === formData.email
     );
-    console.log(userFind.id,
-        userFind.nom,
-        userFind.prenom,
-        (Boolean(userFind.role.find( e => e =='ROLE_ADMIN')))?'ROLE_ADMIN':'ROLE_USER');
+    // console.log(userFind.id,
+    //     userFind.nom,
+    //     userFind.prenom,
+    //     (Boolean(userFind.role.find( e => e ==='ROLE_ADMIN')))?'ROLE_ADMIN':'ROLE_USER'
+    //   );
 
     if (Boolean(userFind)) {
-      const role = (Boolean(userFind.role.find( e => e =='ROLE_ADMIN')))?'ROLE_ADMIN':'ROLE_USER';
+      const role = (Boolean(userFind.role.find( e => e ==='ROLE_ADMIN')))?'ROLE_ADMIN':'ROLE_USER';
 
       saveToLocalStorage({
         id:userFind.id,

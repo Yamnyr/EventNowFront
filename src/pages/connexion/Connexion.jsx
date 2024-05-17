@@ -21,9 +21,18 @@ const Connexion = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // Fonction pour stocker les données dans la session
+  // Gere la redirection vers la route avec un rechargement de la page complete
+  const handleredirect = () => {
+    // Redirection vers la page de d'accueil
+    navigate("/", { replace: true });
+
+    // Rechargement de la page
+    window.location.reload();
+  };
+  // Fonction pour stocker les données dans le locale storege
   const saveToLocalStorage = (data) => {
     localStorage.setItem("userData", JSON.stringify(data));
+    handleredirect();
   };
 
   // Vérifie si les données du formulaire sont présentes dans le tableau des utilisateurs

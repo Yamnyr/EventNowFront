@@ -2,12 +2,25 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const Deconnexion = () => {
-    const navigate = useNavigate();
-    const logOut = ()=>{
-        localStorage.removeItem('userdata');
-        navigate('/');
-    }
+  const navigate = useNavigate();
 
+  // Gere la redirection vers la route avec un rechargement de la page complete
+  const handleredirect = () => {
+    // Redirection vers la page de d'accueil
+    navigate("/", { replace: true });
+
+    // Rechargement de la page
+    window.location.reload();
+  };
+
+  const logOut = async () => {
+    if (localStorage.getItem("userData")) {
+      localStorage.removeItem("userData");
+      handleredirect();
+    } else {
+      console.log("pas de log");  
+    }
+  };
 
   return (
     <div class=" container my-5 card text-center">

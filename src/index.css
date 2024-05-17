@@ -35,6 +35,10 @@
   background-color: #6F5F52; /* couleur de fond au survol */
 }
 
+.btn-group .btn-danger {
+  background-color: rgb(216, 62, 62); /* couleur de fond rouge */
+}
+
 
 
 

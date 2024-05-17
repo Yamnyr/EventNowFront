@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const Connexion = () => {
   const [users, setUsers] = useState([]);
-  const [formData, setFormData] = useState({id: null, password: "", email: "" });
-  const [isUserValid, setIsUserValid] = useState(null);
+  const [formData, setFormData] = useState({password: "", email: "" });
   const navigate = useNavigate();
 
   // Récupère les données de l'API lors du montage du composant
@@ -38,18 +37,29 @@ const Connexion = () => {
   // Vérifie si les données du formulaire sont présentes dans le tableau des utilisateurs
   const handleSubmit = (e) => {
     e.preventDefault();
-    const userExists = users.some(
+    const userFind = users.find(
       (user) =>
-        user.password === formData.password && user.email === formData.email,
-          console.log(users.id)
+        user.password === formData.password && user.email === formData.email
     );
+    console.log(userFind.id,
+        userFind.nom,
+        userFind.prenom,
+        (Boolean(userFind.role.find( e => e =='ROLE_ADMIN')))?'ROLE_ADMIN':'ROLE_USER');
 
-    setIsUserValid(userExists);
+    if (Boolean(userFind)) {
+      const role = (Boolean(userFind.role.find( e => e =='ROLE_ADMIN')))?'ROLE_ADMIN':'ROLE_USER';
+
+      saveToLocalStorage({
+        id:userFind.id,
+        role: role ,
+        nom:userFind.nom,
+        prenom: userFind.prenom,
+        login: true
+      });
+
+    }
   };
-  if (isUserValid) {
-    saveToLocalStorage({nom:formData.email,login: true});
-    navigate('/')
-  }
+
 
   return (
     <div className="container">
@@ -87,15 +97,6 @@ const Connexion = () => {
         </div>
       </form>
 
-      {isUserValid !== null && (
-        <div>
-          {isUserValid ? (
-            <p>L'utilisateur existe dans le tableau.</p>
-          ) : (
-            <p>L'utilisateur n'existe pas dans le tableau.</p>
-          )}
-        </div>
-      )}
     </div>
   );
 };

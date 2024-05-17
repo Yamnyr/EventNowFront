@@ -4,14 +4,21 @@ import { useNavigate } from "react-router-dom";
 const Connexion = () => {
   const [users, setUsers] = useState([]);
   const [formData, setFormData] = useState({ password: "", email: "" });
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   // Récupère les données de l'API lors du montage du composant
   useEffect(() => {
     fetch("http://127.0.0.1:8000/users/getall")
       .then((response) => response.json())
-      .then((data) => setUsers(data))
-      .catch((error) => console.error("Error fetching users:", error));
+      .then((data) => {
+        console.log("Users fetched:", data); // Log fetched users
+        setUsers(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching users:", error);
+        setErrorMessage("Erreur lors de la récupération des utilisateurs.");
+      });
   }, []);
 
   // Gère les changements dans le formulaire
@@ -20,15 +27,13 @@ const Connexion = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // Gere la redirection vers la route avec un rechargement de la page complete
+  // Fonction pour rediriger vers la page d'accueil et recharger la page
   const handleredirect = () => {
-    // Redirection vers la page de d'accueil
     navigate("/", { replace: true });
-
-    // Rechargement de la page
     window.location.reload();
   };
-  // Fonction pour stocker les données dans le locale storege
+
+  // Fonction pour stocker les données dans le localStorage
   const saveToLocalStorage = (data) => {
     localStorage.setItem("userData", JSON.stringify(data));
     handleredirect();
@@ -42,9 +47,8 @@ const Connexion = () => {
         user.password === formData.password && user.email === formData.email
     );
 
-    if (Boolean(userFind)) {
+    if (userFind) {
       const role = userFind.role.includes('ROLE_ADMIN') ? 'ROLE_ADMIN' : 'ROLE_USER';
-
       saveToLocalStorage({
         id: userFind.id,
         role: role,
@@ -52,12 +56,15 @@ const Connexion = () => {
         prenom: userFind.prenom,
         login: true
       });
+    } else {
+      setErrorMessage("Email ou mot de passe incorrect.");
     }
   };
 
   return (
     <div className="container">
       <h1>Formulaire de Connexion d'utilisateur</h1>
+      {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
       <form onSubmit={handleSubmit}>
         <div className="input-group mb-3">
           <span className="input-group-text">@example.com</span>

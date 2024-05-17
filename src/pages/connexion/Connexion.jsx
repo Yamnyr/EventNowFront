@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const Connexion = () => {
   const [users, setUsers] = useState([]);
-  const [formData, setFormData] = useState({password: "", email: "" });
+  const [formData, setFormData] = useState({ password: "", email: "" });
   const navigate = useNavigate();
 
   // Récupère les données de l'API lors du montage du composant
@@ -41,25 +41,19 @@ const Connexion = () => {
       (user) =>
         user.password === formData.password && user.email === formData.email
     );
-    console.log(userFind.id,
-        userFind.nom,
-        userFind.prenom,
-        (Boolean(userFind.role.find( e => e =='ROLE_ADMIN')))?'ROLE_ADMIN':'ROLE_USER');
 
     if (Boolean(userFind)) {
-      const role = (Boolean(userFind.role.find( e => e =='ROLE_ADMIN')))?'ROLE_ADMIN':'ROLE_USER';
+      const role = userFind.role.includes('ROLE_ADMIN') ? 'ROLE_ADMIN' : 'ROLE_USER';
 
       saveToLocalStorage({
-        id:userFind.id,
-        role: role ,
-        nom:userFind.nom,
+        id: userFind.id,
+        role: role,
+        nom: userFind.nom,
         prenom: userFind.prenom,
         login: true
       });
-
     }
   };
-
 
   return (
     <div className="container">
@@ -90,13 +84,11 @@ const Connexion = () => {
           <span className="input-group-text">Password</span>
         </div>
         <div className="container">
-
-          <button class="btn btn-primary" type="submit">
+          <button className="btn btn-primary" type="submit">
             Connexion
           </button>
         </div>
       </form>
-
     </div>
   );
 };

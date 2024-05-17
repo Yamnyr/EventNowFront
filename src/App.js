@@ -29,6 +29,7 @@ function App() {
           <Route path="/detailEvent/:id" element={<DetailEvenement />} />
           <Route path="/login" element={<Connexion />} />
           <Route path="/logout" element={<Deconnexion />} />
+          <Route path="/Inscription" element={<Inscription />} />
         </Routes>
         <Footer />
       </div>

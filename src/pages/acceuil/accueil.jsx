@@ -4,36 +4,47 @@ import MyCarousel from "./ImageCarousel";
 import EvenementCard from "../../components/EvenementCard";
 import DateCard from "../../components/DateCard";
 import Evenement from "../evenement/evenement";
+import { useLocation } from 'react-router-dom';
+import { Alert } from 'react-bootstrap';
 
 const Accueil = () => {
-
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
-//   useEffect(() => {
-//     const fetchEvents = async () => {
-//         try {
-//             // const response = await axios.get('http://127.0.0.1:8000/api/evenements?page=1');
-//             const response = await axios.get('http://127.0.0.1:8000/evenements/getall');
-//             // console.log(response.data)
-//             setEvents(response.data);
-//             console.log(response.data)
-//             setLoading(false);
-//         } catch (err) {
-//             setError(err.message);
-//             setLoading(false);
-//         }
-//     };
-//
-//     fetchEvents();
-// }, []);
+  const location = useLocation();
+  const [message, setMessage] = useState(location.state?.message || '');
+
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage('');
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
+  // useEffect(() => {
+  //   const fetchEvents = async () => {
+  //     try {
+  //       // const response = await axios.get('http://127.0.0.1:8000/api/evenements?page=1');
+  //       const response = await axios.get('http://127.0.0.1:8000/evenements/getall');
+  //       // console.log(response.data)
+  //       setEvents(response.data);
+  //       console.log(response.data)
+  //       setLoading(false);
+  //     } catch (err) {
+  //       setError(err.message);
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchEvents();
+  // }, []);
 
   return (
-    
     <div>
-      
-      <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+      {message && <Alert variant="success">{message}</Alert>}
+      <svg xmlns="http://www.w3.org/2000/svg" className="d-none">
         <symbol id="check2" viewBox="0 0 16 16">
           <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
         </symbol>
@@ -49,38 +60,38 @@ const Accueil = () => {
         </symbol>
       </svg>
 
-      <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
+      <div className="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
         <button
-          class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center"
+          className="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center"
           id="bd-theme"
           type="button"
           aria-expanded="false"
           data-bs-toggle="dropdown"
           aria-label="Toggle theme (auto)"
         >
-          <svg class="bi my-1 theme-icon-active" width="1em" height="1em">
+          <svg className="bi my-1 theme-icon-active" width="1em" height="1em">
             <use href="#circle-half"></use>
           </svg>
-          <span class="visually-hidden" id="bd-theme-text">
+          <span className="visually-hidden" id="bd-theme-text">
             Toggle theme
           </span>
         </button>
         <ul
-          class="dropdown-menu dropdown-menu-end shadow"
+          className="dropdown-menu dropdown-menu-end shadow"
           aria-labelledby="bd-theme-text"
         >
           <li>
             <button
               type="button"
-              class="dropdown-item d-flex align-items-center"
+              className="dropdown-item d-flex align-items-center"
               data-bs-theme-value="light"
               aria-pressed="false"
             >
-              <svg class="bi me-2 opacity-50" width="1em" height="1em">
+              <svg className="bi me-2 opacity-50" width="1em" height="1em">
                 <use href="#sun-fill"></use>
               </svg>
               Light
-              <svg class="bi ms-auto d-none" width="1em" height="1em">
+              <svg className="bi ms-auto d-none" width="1em" height="1em">
                 <use href="#check2"></use>
               </svg>
             </button>
@@ -88,15 +99,15 @@ const Accueil = () => {
           <li>
             <button
               type="button"
-              class="dropdown-item d-flex align-items-center"
+              className="dropdown-item d-flex align-items-center"
               data-bs-theme-value="dark"
               aria-pressed="false"
             >
-              <svg class="bi me-2 opacity-50" width="1em" height="1em">
+              <svg className="bi me-2 opacity-50" width="1em" height="1em">
                 <use href="#moon-stars-fill"></use>
               </svg>
               Dark
-              <svg class="bi ms-auto d-none" width="1em" height="1em">
+              <svg className="bi ms-auto d-none" width="1em" height="1em">
                 <use href="#check2"></use>
               </svg>
             </button>
@@ -104,15 +115,15 @@ const Accueil = () => {
           <li>
             <button
               type="button"
-              class="dropdown-item d-flex align-items-center active"
+              className="dropdown-item d-flex align-items-center active"
               data-bs-theme-value="auto"
               aria-pressed="true"
             >
-              <svg class="bi me-2 opacity-50" width="1em" height="1em">
+              <svg className="bi me-2 opacity-50" width="1em" height="1em">
                 <use href="#circle-half"></use>
               </svg>
               Auto
-              <svg class="bi ms-auto d-none" width="1em" height="1em">
+              <svg className="bi ms-auto d-none" width="1em" height="1em">
                 <use href="#check2"></use>
               </svg>
             </button>
@@ -120,127 +131,28 @@ const Accueil = () => {
         </ul>
       </div>
       <div>
-      <h1 style={{ fontFamily: 'Consolas', textAlign: 'center' }}>En tournée actuellement</h1>
-      <MyCarousel />
+        <h1 style={{ fontFamily: 'Consolas', textAlign: 'center' }}>En tournée actuellement</h1>
+        <MyCarousel />
       </div>
       <main>
-      <h1 style={{ fontFamily: 'Consolas', textAlign: 'center' }}>Soirées et festival à venir</h1>
-
-        
-
+        <h1 style={{ fontFamily: 'Consolas', textAlign: 'center' }}>Soirées et festival à venir</h1>
         <div className="container marketing">
           <div className="row">
-
-            <Evenement></Evenement>
-            {/* <div className="col-lg-4">
-              <svg
-                className="bd-placeholder-img rounded-circle"
-                width="140"
-                height="140"
-                xmlns="http://www.w3.org/2000/svg"
-                role="img"
-                aria-label="Placeholder"
-                preserveAspectRatio="xMidYMid slice"
-                focusable="false"
-              >
-                <title>Placeholder</title>
-                <rect
-                  width="100%"
-                  height="100%"
-                  fill="var(--bs-secondary-color)"
-                />
-              </svg>
-              <h2 className="fw-normal">Heading</h2>
-              <p>
-                Another exciting bit of representative placeholder content. This
-                time, we've moved on to the second column.
-              </p>
-              <p>
-                <a className="btn btn-secondary" href="#">
-                  View details &raquo;
-                </a>
-              </p>
-            </div>
-            <div className="col-lg-4">
-              <svg
-                className="bd-placeholder-img rounded-circle"
-                width="140"
-                height="140"
-                xmlns="http://www.w3.org/2000/svg"
-                role="img"
-                aria-label="Placeholder"
-                preserveAspectRatio="xMidYMid slice"
-                focusable="false"
-              >
-                <title>Placeholder</title>
-                <rect
-                  width="100%"
-                  height="100%"
-                  fill="var(--bs-secondary-color)"
-                />
-              </svg>{" "}
-              <h2 class="fw-normal">Heading</h2>
-              <p>
-                Another exciting bit of representative placeholder content. This
-                time, we've moved on to the second column.
-              </p>
-              <p>
-                <a class="btn btn-secondary" href="#">
-                  View details &raquo;
-                </a>
-              </p>
-            </div>
-            <div class="col-lg-4">
-              <svg
-                class="bd-placeholder-img rounded-circle"
-                width="140"
-                height="140"
-                xmlns="http://www.w3.org/2000/svg"
-                role="img"
-                aria-label="Placeholder"
-                preserveAspectRatio="xMidYMid slice"
-                focusable="false"
-              >
-                <title>Placeholder</title>
-                <rect
-                  width="100%"
-                  height="100%"
-                  fill="var(--bs-secondary-color)"
-                />
-              </svg>
-              <h2 class="fw-normal">Heading</h2>
-              <p>
-                And lastly this, the third column of representative placeholder
-                content.
-              </p>
-              <p>
-                <a class="btn btn-secondary" href="#">
-                  View details &raquo;
-                </a>
-              </p>
-            </div> */}
+            <Evenement />
           </div>
         </div>
-
-        <hr class="featurette-divider" />
-        <div class="row featurette m-5 p-5">
-          <div class="col-md-7">
-            <h2 class="featurette-heading fw-normal lh-1">Qui sommes nous ?</h2>
-            <p class="lead">
-              EventNow est un site regroupant de nombreux événements aussi bien
-              sportif, musical que culturel !
+        <hr className="featurette-divider" />
+        <div className="row featurette m-5 p-5">
+          <div className="col-md-7">
+            <h2 className="featurette-heading fw-normal lh-1">Qui sommes nous ?</h2>
+            <p className="lead">
+              EventNow est un site regroupant de nombreux événements aussi bien sportif, musical que culturel !
             </p>
-            <p class="lead">
-              En partenariat avec de nombreux groupe, nous sommes uniquement en
-              lien direct avec le nouveau centre culturel du Havre en Normandie
-              ayant une capacité d'accueuillir jusqu'à 7000 personnes. Une
-              billeterie en ligne 100% fiables, permettant de vous informez sur
-              l'événement de votre choix. Concerts, spectacle, expositiions
-              artistiques et bien plus sont mis en avant, de quoi découvrire de
-              belle chose !
+            <p className="lead">
+              En partenariat avec de nombreux groupe, nous sommes uniquement en lien direct avec le nouveau centre culturel du Havre en Normandie ayant une capacité d'accueuillir jusqu'à 7000 personnes. Une billeterie en ligne 100% fiables, permettant de vous informez sur l'événement de votre choix. Concerts, spectacle, expositiions artistiques et bien plus sont mis en avant, de quoi découvrire de belle chose !
             </p>
           </div>
-          <div class="col-md-5">
+          <div className="col-md-5">
             <svg
               className="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
               width="500"
@@ -260,27 +172,23 @@ const Accueil = () => {
             </svg>
           </div>
         </div>
-
-        <hr class="featurette-divider" />
-
-        <div class="row featurette m-5 p-5">
-          <div class="col-md-7 order-md-2">
-            <h2 class="featurette-heading fw-normal lh-1">
-            Pourquoi acheter vos billets chez EventNow ?
-            </h2>
-            <p class="lead">
-            Qui mieux que le spécialiste de la culture peut vous proposer des idées de sorties ? 
-            Chez EventNow, nous avons pour mission de faciliter l'accès à la culture à nos clients.
-            Nous vous proposons d'aller plus loin dans votre passion de la lecture, de la musique ou de l'art en vous proposant notre service de billetterie.
-            Nous vous proposons l'accès d'un large catalogue de concerts, de comédies musicales, d'évènements sportifs, de festivals et de sorties en famille.
+        <hr className="featurette-divider" />
+        <div className="row featurette m-5 p-5">
+          <div className="col-md-7 order-md-2">
+            <h2 className="featurette-heading fw-normal lh-1">Pourquoi acheter vos billets chez EventNow ?</h2>
+            <p className="lead">
+              Qui mieux que le spécialiste de la culture peut vous proposer des idées de sorties ?
+              Chez EventNow, nous avons pour mission de faciliter l'accès à la culture à nos clients.
+              Nous vous proposons d'aller plus loin dans votre passion de la lecture, de la musique ou de l'art en vous proposant notre service de billetterie.
+              Nous vous proposons l'accès d'un large catalogue de concerts, de comédies musicales, d'évènements sportifs, de festivals et de sorties en famille.
             </p>
-            <p class="lead">
-            Nous souhaitons agir au niveau local. Rendez-vous dans la billeterie en ligne pour y trouver des évenements locaux.
+            <p className="lead">
+              Nous souhaitons agir au niveau local. Rendez-vous dans la billeterie en ligne pour y trouver des évenements locaux.
             </p>
           </div>
-          <div class="col-md-5 order-md-1">
+          <div className="col-md-5 order-md-1">
             <svg
-              class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
+              className="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
               width="500"
               height="500"
               xmlns="http://www.w3.org/2000/svg"
@@ -295,27 +203,22 @@ const Accueil = () => {
                 width="500"
                 height="500"
               />
-
             </svg>
           </div>
         </div>
-
-        <hr class="featurette-divider" />
-
-        <div class="row featurette m-5 p-5">
-          <div class="col-md-7">
-            <h2 class="featurette-heading fw-normal lh-1">
-              Et enfin.{" "}
-            </h2>
-            <p class="lead">
-            Voir son chanteur préféré en concert, c'est un souvenir inoubliable, c'est pour cela que nous vous proposons de garder le souvenir de ce moment inoubliable grâce à nos offres de Collector.
-            Une offre permettant d'avoir un instant pour discutter avec votre artiste !
-            Nous savons pertinamment que le meilleur moment sera vécu dans notre centre Culturel.
+        <hr className="featurette-divider" />
+        <div className="row featurette m-5 p-5">
+          <div className="col-md-7">
+            <h2 className="featurette-heading fw-normal lh-1">Et enfin.</h2>
+            <p className="lead">
+              Voir son chanteur préféré en concert, c'est un souvenir inoubliable, c'est pour cela que nous vous proposons de garder le souvenir de ce moment inoubliable grâce à nos offres de Collector.
+              Une offre permettant d'avoir un instant pour discutter avec votre artiste !
+              Nous savons pertinamment que le meilleur moment sera vécu dans notre centre Culturel.
             </p>
           </div>
-          <div class="col-md-5">
+          <div className="col-md-5">
             <svg
-              class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
+              className="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
               width="500"
               height="500"
               xmlns="http://www.w3.org/2000/svg"
@@ -333,8 +236,7 @@ const Accueil = () => {
             </svg>
           </div>
         </div>
-
-        <hr class="featurette-divider" />
+        <hr className="featurette-divider" />
       </main>
     </div>
   );

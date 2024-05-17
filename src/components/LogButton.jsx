@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import "../index.css";
+
 import { Link } from "react-router-dom";
 
 export default function LogButton() {
@@ -20,14 +22,14 @@ export default function LogButton() {
   const login = () => {
     setlogRoute({
       url: "/logout",
-      route: "Deconnexion",
+      route: "DECONNEXION",
       class: "btn btn-danger",
     });
   };
   const logout = () => {
     setlogRoute({
       url: "/login",
-      route: "Connexion",
+      route: "CONNEXION",
       class: "btn btn-primary",
     });
   };

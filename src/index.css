@@ -21,6 +21,21 @@
   width: auto; /* garder la proportion */
 }
 
+/* ### CSS BOUTTON */
+/*================================================================================================================================== */
+.btn-group button {
+  background-color: #DFD0B8; /* Couleur de fond similaire à l'image */
+  color: #000000; /* Couleur du texte noir */
+  border: none; /* aucune bordure */
+  padding: 10px 20px; /* espace intérieur */
+  transition: background-color 0.3s ease; /* transition de couleur */
+}
+
+.btn-group button:hover {
+  background-color: #6F5F52; /* couleur de fond au survol */
+}
+
+
 
 
 

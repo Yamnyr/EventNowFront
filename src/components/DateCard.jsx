@@ -55,7 +55,8 @@ export default function DateCard({ data }) {
                                                 })}
                                             </p>
                                             <p className="card-text">{date.evenement.lieu}</p>
-                                            <span className="badge bg-warning text-dark">Encore {date.places_rest} places restantes !</span>
+                                            {date.evenement.annule ? <div></div>:
+                                            <span className="badge bg-warning text-dark">Encore {date.places_rest} places restantes !</span>}
 
                                             <p className="card-text">{date.evenement.description}</p>
                                             {date.evenement.annule && (
@@ -63,9 +64,16 @@ export default function DateCard({ data }) {
                                             )}
                                         </div>
                                         <div className="d-flex justify-content-between align-items-center position-absolute bottom-0 end-0 p-3">
-                                            <button onClick={goToDetailPage} className="btn btn-info ms-auto">
-                                                Pour plus d'info
-                                            </button>
+
+
+                                            {date.evenement.annule ?
+                                                <p className="text-danger text-red"
+                                                   style={{color: 'red', fontWeight: 'bold', fontSize: '1.2rem'}}>
+                                                    Evenements annulé : {date.evenement.raison_annulation}
+                                                </p>:
+                                                <button onClick={goToDetailPage} className="btn btn-info ms-auto">
+                                                    Pour plus d'info
+                                                </button>}
                                         </div>
                                     </div>
                                 </div>

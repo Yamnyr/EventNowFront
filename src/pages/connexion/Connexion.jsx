@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import CryptoJS from "crypto-js";
 
 const Connexion = () => {
   const [users, setUsers] = useState([]);
-  const [formData, setFormData] = useState({password: "", email: "" });
+  const [formData, setFormData] = useState({ password: "", email: "" });
   const navigate = useNavigate();
 
   // Récupère les données de l'API lors du montage du composant
@@ -28,38 +29,49 @@ const Connexion = () => {
     // Rechargement de la page
     window.location.reload();
   };
+
   // Fonction pour stocker les données dans le locale storege
   const saveToLocalStorage = (data) => {
     localStorage.setItem("userData", JSON.stringify(data));
     handleredirect();
   };
 
+  // const handleHash = () => {
+  //   const hashedPassword = CryptoJS.MD5(formData.password).toString();
+  //   setHash(hashedPassword);
+  // };
+
   // Vérifie si les données du formulaire sont présentes dans le tableau des utilisateurs
   const handleSubmit = (e) => {
     e.preventDefault();
+    const hash =CryptoJS.MD5(formData.password).toString();
     const userFind = users.find(
       (user) =>
-        user.password === formData.password && user.email === formData.email
+        user.password === hash && user.email === formData.email
     );
-    console.log(userFind.id,
-        userFind.nom,
-        userFind.prenom,
-        (Boolean(userFind.role.find( e => e =='ROLE_ADMIN')))?'ROLE_ADMIN':'ROLE_USER');
+    
+    // console.log(formData.email);
+    // console.log(hash);
+    // console.log(userFind.id,
+    //     userFind.nom,
+    //     userFind.prenom,
+    //     (Boolean(userFind.role.find( e => e ==='ROLE_ADMIN')))?'ROLE_ADMIN':'ROLE_USER'
+    //   );
 
     if (Boolean(userFind)) {
-      const role = (Boolean(userFind.role.find( e => e =='ROLE_ADMIN')))?'ROLE_ADMIN':'ROLE_USER';
+      const role = Boolean(userFind.role.find((e) => e === "ROLE_ADMIN"))
+        ? "ROLE_ADMIN"
+        : "ROLE_USER";
 
       saveToLocalStorage({
-        id:userFind.id,
-        role: role ,
-        nom:userFind.nom,
+        id: userFind.id,
+        role: role,
+        nom: userFind.nom,
         prenom: userFind.prenom,
-        login: true
+        login: true,
       });
-
     }
   };
-
 
   return (
     <div className="container">
@@ -90,13 +102,11 @@ const Connexion = () => {
           <span className="input-group-text">Password</span>
         </div>
         <div className="container">
-
           <button class="btn btn-primary" type="submit">
             Connexion
           </button>
         </div>
       </form>
-
     </div>
   );
 };
